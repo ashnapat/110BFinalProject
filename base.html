@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Online Shop{% endblock %}</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Open+Sans:wght@400;600&display=swap">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <div class="top-nav">
+        <!-- Home Button (Left) -->
+        <div class="home-link">
+            <a href="{{ url_for('index') }}" title="Home">🏠</a>
+        </div>
+
+        <!-- Right Buttons (Cart and Logout/Login) -->
+        <div class="right-buttons">
+            <div class="cart-link">
+                <a href="{{ url_for('cart') }}" title="View Shopping Cart">🛒</a>
+            </div>
+            {% if user %}
+                <a href="{{ url_for('logout') }}" class="logout-button">LOG OUT</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="logout-button">LOG IN</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+            <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
