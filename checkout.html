@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<h1 class="title">Checkout</h1>
+
+<div class="checkout-container">
+    {% if cart and cart|length > 0 %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>${{ item.price * item.quantity }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td><strong>${{ total }}</strong></td>
+                </tr>
+            </tfoot>
+        </table>
+        <!-- Email Input Form -->
+        <form method="post" class="email-form">
+            <label for="email">Enter your email to receive the order confirmation:</label>
+            <input type="email" id="email" name="email" placeholder="example@example.com" required>
+            <button type="submit" class="button">Confirm Purchase</button>
+        </form>
+    {% else %}
+        <p>Your cart is empty. <a href="{{ url_for('index') }}" class="button-secondary">Back to Shop</a></p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to the Online Shop{% endblock %}
+
+{% block content %}
+<h1 class="title">Welcome to the Online Shop</h1>
+
+<div class="welcome">
+    {% if user %}
+        <p>Welcome, {{ user.name }}!</p>
+    {% else %}
+        <p><a href="{{ url_for('login') }}" class="button-secondary">Login</a></p>
+    {% endif %}
+</div>
+
+<div class="product-grid">
+    {% for product in products %}
+    <div class="product-card">
+        <img src="{{ product.image }}" alt="{{ product.name }}">
+        <h3><a href="{{ url_for('product_details', product_id=product.id) }}">{{ product.name }}</a></h3>
+        <p><strong>${{ product.price }}</strong></p>
+        <a href="{{ url_for('add_to_cart', product_id=product.id) }}" class="button">Add to Cart</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
